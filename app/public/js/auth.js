@@ -1,49 +1,54 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("formConnexion");
+// Variables
+ let utilisateurs = [];
 
-    form.addEventListener("submit", function (event) {
-        let valid = true;
 
-        const email = document.getElementById("email");
-        const password = document.getElementById("mot_de_passe");
+// element HTML
+const prenom = document.getElementById("prenom");
+const nom = document.getElementById("nom");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const confirmPassword = document.getElementById("confirm-password");
 
-        // Vérif email
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-            showError(email, "Email invalide");
-            valid = false;
-        } else {
-            clearError(email);
+
+
+function init() {
+    console.log("Initialisation du module utilisateur...");
+
+    // Fonction d'inscription
+    function inscrire(pseudo, email, motDePasse) {
+        // Validation
+        if (!pseudo || !email || !motDePasse) {
+            return { succes: false, message: "Tous les champs sont obligatoires." };
+        }
+        if (utilisateurs.some(u => u.pseudo === pseudo || u.email === email)) {
+            return { succes: false, message: "Pseudo ou email déjà utilisé." };
         }
 
-        // Vérif mot de passe
-        if (password.value.trim().length < 6) {
-            showError(password, "Le mot de passe doit contenir au moins 6 caractères");
-            valid = false;
-        } else {
-            clearError(password);
-        }
+        // Enregistrement
+        utilisateurs.push({
+            pseudo,
+            email,
+            motDePasse, 
+            dateInscription: new Date()
+        });
 
-        if (!valid) {
-            event.preventDefault();
-        }
-    });
-
-    function showError(input, message) {
-        let error = input.nextElementSibling;
-        if (!error || !error.classList.contains("error-message")) {
-            error = document.createElement("div");
-            error.classList.add("error-message");
-            input.insertAdjacentElement("afterend", error);
-        }
-        error.textContent = message;
-        input.classList.add("input-error");
+        return { succes: true, message: "Inscription réussie !" };
     }
 
-    function clearError(input) {
-        let error = input.nextElementSibling;
-        if (error && error.classList.contains("error-message")) {
-            error.remove();
+    // Fonction de connexion
+    function connecter(email, motDePasse) {
+        let utilisateur = utilisateurs.find(u => u.email === email && u.motDePasse === motDePasse);
+        if (utilisateur) {
+            return { succes: true, message: `Bienvenue, ${utilisateur.pseudo} !` };
         }
-        input.classList.remove("input-error");
+        return { succes: false, message: "Identifiants incorrects." };
     }
-});
+
+    // Démo d'utilisation
+    console.log(inscrire("Nadia", "nadia@example.com", "123456"));
+    console.log(inscrire("Nadia", "nadia@example.com", "123456")); 
+    console.log(connecter("nadia@example.com", "123456"));
+    console.log(connecter("nadia@example.com", "mauvaismdp"));
+}
+
+init();

@@ -17,7 +17,8 @@ class AuthController
             $mot_de_passe = $_POST['mot_de_passe'];
 
             if ($this->utilisateur->inscrire($pseudo, $email, $mot_de_passe)) {
-                header("Location: index.php?action=connexion&inscription=ok");
+                header("Location: /Projet_web1/stampee/index.php?action=connexion&inscription=ok");
+                exit();
             } else {
                 echo "Erreur lors de l'inscription.";
             }
@@ -35,7 +36,7 @@ class AuthController
             if ($user) {
                 session_start();
                 $_SESSION['user'] = $user;
-                header("Location: index.php");
+                header("Location: /Projet_web1/stampee/app/public/index.php");
             } else {
                 echo "Email ou mot de passe incorrect.";
             }
