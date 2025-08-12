@@ -8,11 +8,38 @@ const nom = document.getElementById("nom");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const confirmPassword = document.getElementById("confirm-password");
-
+const form = document.getElementById("form-inscription");
 
 
 function init() {
     console.log("Initialisation du module utilisateur...");
+
+
+    form.addEventListener("submit", function (e) {
+    e.preventDefault(); // Empêche le rechargement
+
+    if (password.value !== confirmPassword.value) {
+        alert("Les mots de passe ne correspondent pas.");
+        return;
+    }
+
+    fetch("create_user.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            prenom: prenom.value,
+            nom: nom.value,
+            email: email.value,
+            password: password.value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        if (data.succes) form.reset();
+    })
+    .catch(err => console.error("Erreur:", err));
+});
 
     // Fonction d'inscription
     function inscrire(pseudo, email, motDePasse) {

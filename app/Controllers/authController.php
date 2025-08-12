@@ -12,11 +12,12 @@ class AuthController
     public function inscription()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $pseudo = $_POST['pseudo'];
+            $nom = $_POST['nom'];
+            $prenom = $_POST['prenom'];
             $email = $_POST['email'];
             $mot_de_passe = $_POST['mot_de_passe'];
 
-            if ($this->utilisateur->inscrire($pseudo, $email, $mot_de_passe)) {
+            if ($this->utilisateur->inscrire($prenom, $nom, $email, $mot_de_passe)) {
                 header("Location: /Projet_web1/stampee/index.php?action=connexion&inscription=ok");
                 exit();
             } else {
@@ -36,7 +37,7 @@ class AuthController
             if ($user) {
                 session_start();
                 $_SESSION['user'] = $user;
-                header("Location: /Projet_web1/stampee/app/public/index.php");
+                header("Location: /Projet_web1/stampee/index.php");
             } else {
                 echo "Email ou mot de passe incorrect.";
             }

@@ -1,0 +1,15 @@
+{
+    "name": "nadia/stampee",
+    "autoload": {
+        "psr-4": {
+            "Nadia\\Stampee\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nadia Ouafi",
+            "email": "nadiaouafi.md@gmail.com"
+        }
+    ],
+    "require": {}
+}

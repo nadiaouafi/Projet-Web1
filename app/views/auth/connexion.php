@@ -39,6 +39,12 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
 
     </header>
 
+    <?php if (!empty($erreurs)): ?>
+        <ul style="color:red;">
+            <?php foreach ($erreurs as $e) echo "<li>$e</li>"; ?>
+        </ul>
+    <?php endif; ?>
+
     <main class="form-container">
         <h1>Connexion</h1>
         <form id="formConnexion" class="validation" action="/connexion" method="POST">
@@ -59,15 +65,6 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
                 <img src="/Projet_web1/stampee/app/public/img/logo_clair.webp" alt="Logo Stampee">
 
             </div>
-
-
-            <h3>À propos</h3>
-            <p>
-                Lord Stampee vient d’une famille de passionnés de philatélie depuis des générations.
-                Sa passion pour les timbres rares et précieux l'a amené à rassembler l'une des collections
-                les plus impressionnantes du monde.
-            </p>
-            <a href="#">En savoir plus</a>
 
 
             <div class="footer-col">

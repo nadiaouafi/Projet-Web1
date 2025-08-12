@@ -39,6 +39,12 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
 
     </header>
 
+    <?php if (!empty($erreurs)): ?>
+        <ul style="color:red;">
+            <?php foreach ($erreurs as $e) echo "<li>$e</li>"; ?>
+        </ul>
+    <?php endif; ?>
+
 
     <main class="form-container">
         <h1>Inscription</h1>
