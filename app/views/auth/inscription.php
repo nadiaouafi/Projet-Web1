@@ -24,7 +24,7 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
         <?php $baseUrl = '/Projet_web1/stampee/'; ?>
         <nav>
             <ul>
-                <li><a href="<?= $baseUrl ?>app/views/auth/index.php">Accueil</a></li>
+                <li><a href="<?= $baseUrl ?>app/views/auth/home.php">Accueil</a></li>
                 <li><a href="<?= $baseUrl ?>app/views/auth/enchere.php">Enchères</a></li>
                 <li><a href="<?= $baseUrl ?>app/views/auth/connexion.php">Connexion</a></li>
             </ul>
@@ -48,7 +48,7 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
 
     <main class="form-container">
         <h1>Inscription</h1>
-        <form action="register_process.php" method="POST">
+        <form action="../../controllers/inscriptionController.php" method="POST">
 
             <label for="prenom">Prénom</label>
             <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>

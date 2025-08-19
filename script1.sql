@@ -1,19 +1,17 @@
 
-CREATE TABLE Utilisateurs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(50) NOT NULL UNIQUE,
-    prenom VARCHAR(50) NOT NULL UNIQUE,
+CREATE TABLE utilisateurs (
+    idUtilisateurs INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(50) NOT NULL,
+    prenom VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     mot_de_passe VARCHAR(255) NOT NULL, 
     date_inscription DATETIME DEFAULT CURRENT_TIMESTAMP,
-    nom_complet VARCHAR(100),
+    nom_complet VARCHAR(100) GENERATED ALWAYS AS (CONCAT(prenom, ' ', nom)) STORED,
     adresse VARCHAR(255),
     telephone VARCHAR(20),
     
-    INDEX(pseudo),
     INDEX(email)
 );
-
 
 CREATE TABLE Timbre (
     id INT AUTO_INCREMENT PRIMARY KEY,

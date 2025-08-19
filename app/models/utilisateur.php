@@ -13,12 +13,13 @@ class Utilisateur
         // Hachage du mot de passe
         $hash = password_hash($mot_de_passe, PASSWORD_DEFAULT);
 
-        $sql = "INSERT INTO utilisateurs (nom, email, mot_de_passe) VALUES (:pseudo, :email, :mot_de_passe)";
+        $sql = "INSERT INTO utilisateurs (prenom, nom, email, mot_de_passe, date_inscription ) 
+            VALUES (:prenom, :nom, :email, :mot_de_passe, NOW())";
         $stmt = $this->pdo->prepare($sql);
 
         return $stmt->execute([
-            ':nom' => $nom,
             ':prenom' => $prenom,
+            ':nom' => $nom,
             ':email' => $email,
             ':mot_de_passe' => $hash
         ]);
@@ -39,8 +40,9 @@ class Utilisateur
 
     public function getAll()
     {
-        $sql = "SELECT id, prenom, nom, email, date_creation FROM utilisateurs";
-        $stmt = $this->pdo->query($sql);
+        $stmt = $this->pdo->query(
+            "SELECT idUtilisateurs, prenom, nom, email, date_inscription FROM utilisateurs"
+        );
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

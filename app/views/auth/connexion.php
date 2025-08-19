@@ -2,6 +2,40 @@
 $baseUrl = '/Projet_web1/stampee/app/public/';
 ?>
 
+<?php
+session_start();
+require_once __DIR__ . '/../../../config/Database.php';
+
+$erreurs = [];
+
+$pdo = Database::getInstance();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+
+    try {
+        $pdo = Database::getInstance();
+        $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE email = :email");
+        $stmt->execute(['email' => $email]);
+        $utilisateurs = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($utilisateurs && password_verify($password, $utilisateurs['mot_de_passe'])) {
+
+            $_SESSION['utilisateurs_id'] = $utilisateurs['id'];
+            $_SESSION['nom'] = $utilisateurs['nom'];
+
+            header("Location: enchere.php");
+            exit;
+        } else {
+            $erreurs[] = "Email ou mot de passe incorrect.";
+        }
+    } catch (Exception $e) {
+        $erreurs[] = "Erreur serveur : " . $e->getMessage();
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -23,9 +57,10 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
         <?php $baseUrl = '/Projet_web1/stampee/'; ?>
         <nav>
             <ul>
-                <li><a href="<?= $baseUrl ?>app/views/auth/index.php">Accueil</a></li>
+                <li><a href="<?= $baseUrl ?>app/views/auth/home.php">Accueil</a></li>
                 <li><a href="<?= $baseUrl ?>app/views/auth/enchere.php">Enchères</a></li>
                 <li><a href="<?= $baseUrl ?>app/views/auth/connexion.php">Connexion</a></li>
+                <li><a href="index.php?action=liste-utilisateurs">liste des utilisateurs</a></li>
             </ul>
         </nav>
 
@@ -47,7 +82,7 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
 
     <main class="form-container">
         <h1>Connexion</h1>
-        <form id="formConnexion" class="validation" action="/connexion" method="POST">
+        <form id="formConnexion" class="validation" action="connexion.php" method="POST">
             <label for="email">Adresse e-mail</label>
             <input type="email" id="email" name="email" placeholder="Votre e-mail" required>
 

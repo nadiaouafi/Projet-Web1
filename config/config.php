@@ -1,12 +1,27 @@
 <?php
-$host = "localhost";
-$dbname = "stampee";
-$username = "root";
-$password = "";
+class Database
+{
+    private $host = "localhost";
+    private $dbname = "stampee";
+    private $username = "root";
+    private $password = "";
+    private $conn;
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erreur de connexion : " . $e->getMessage());
+    public function getConnection()
+    {
+        $this->conn = null;
+
+        try {
+            $this->conn = new PDO(
+                "mysql:host=" . $this->host . ";dbname=" . $this->dbname . ";charset=utf8",
+                $this->username,
+                $this->password
+            );
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Erreur de connexion : " . $e->getMessage();
+        }
+
+        return $this->conn;
+    }
 }

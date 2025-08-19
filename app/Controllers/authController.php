@@ -15,13 +15,13 @@ class AuthController
             $nom = $_POST['nom'];
             $prenom = $_POST['prenom'];
             $email = $_POST['email'];
-            $mot_de_passe = $_POST['mot_de_passe'];
+            $mot_de_passe = password_hash($_POST['mot_de_passe'], PASSWORD_DEFAULT); // hachage
 
             if ($this->utilisateur->inscrire($prenom, $nom, $email, $mot_de_passe)) {
                 header("Location: /Projet_web1/stampee/index.php?action=connexion&inscription=ok");
                 exit();
             } else {
-                echo "Erreur lors de l'inscription.";
+                echo "Erreur lors de l'inscription (email déjà utilisé ?).";
             }
         }
         require __DIR__ . '/../views/auth/inscription.php';
@@ -33,15 +33,27 @@ class AuthController
             $email = $_POST['email'];
             $mot_de_passe = $_POST['mot_de_passe'];
 
-            $user = $this->utilisateur->connecter($email, $mot_de_passe);
-            if ($user) {
+            // Connexion à la base de données
+            $pdo = Database::getInstance();
+
+            $stmt = $pdo->prepare("SELECT * FROM Membre WHERE email = :email");
+            $stmt->execute(['email' => $email]);
+            $membre = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($membre && password_verify($mot_de_passe, $membre['mot_de_passe'])) {
                 session_start();
-                $_SESSION['user'] = $user;
-                header("Location: /Projet_web1/stampee/index.php");
+                $_SESSION['membre_id'] = $membre['id'];
+                $_SESSION['pseudo'] = $membre['pseudo'];
+
+                // Redirection vers la page des enchères
+                header('Location: /encheres');
+                exit;
             } else {
-                echo "Email ou mot de passe incorrect.";
+                $error = "Email ou mot de passe incorrect";
+                require '../app/views/auth/connexion.php';
             }
+        } else {
+            require '../app/views/auth/connexion.php';
         }
-        require __DIR__ . '/../views/auth/connexion.php';
     }
 }

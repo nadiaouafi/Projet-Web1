@@ -97,36 +97,49 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
 
         </header>
 
-        <h2>Liste des utilisateurs</h2>
-
-        <table>
+        <h2>Liste des timbres</h2>
+        <table border="1" cellpadding="5">
             <tr>
                 <th>ID</th>
-                <th>Prénom</th>
                 <th>Nom</th>
-                <th>Email</th>
-                <th>Date d'inscription</th>
+                <th>Année</th>
+                <th>Couleurs</th>
+                <th>Pays</th>
+                <th>État</th>
+                <th>Tirage</th>
+                <th>Dimensions</th>
+                <th>Certifié</th>
             </tr>
 
-            <?php if (!empty($utilisateurs)): ?>
-                <?php foreach ($utilisateurs as $u): ?>
+            <div class="actions">
+                <a href="/Projet_web1/stampee/app/views/auth/Enchere/ajouter-timbre.php"> Ajouter un Timbre</a>
+
+            </div>
+
+            <?php if (!empty($timbres) && is_array($timbres)): ?>
+                <?php foreach ($timbres as $t): ?>
                     <tr>
-                        <td><?= htmlspecialchars($u['idUtilisateurs']) ?></td>
-                        <td><?= htmlspecialchars($u['prenom']) ?></td>
-                        <td><?= htmlspecialchars($u['nom']) ?></td>
-                        <td><?= htmlspecialchars($u['email']) ?></td>
-                        <td>(Inscrit le <?= $u['date_inscription'] ?>)<?= htmlspecialchars($u['date_inscription']) ?></td>
+                        <td><?= htmlspecialchars($t['id']) ?></td>
+                        <td><?= htmlspecialchars($t['nom']) ?></td>
+                        <td><?= htmlspecialchars($t['date_creation']) ?></td>
+                        <td><?= htmlspecialchars($t['couleurs']) ?></td>
+                        <td><?= htmlspecialchars($t['pays_origine']) ?></td>
+                        <td><?= htmlspecialchars($t['etat']) ?></td>
+                        <td><?= htmlspecialchars($t['tirage']) ?></td>
+                        <td><?= htmlspecialchars($t['dimensions']) ?></td>
+                        <td><?= htmlspecialchars($t['prix']) ?></td>
+                        <td><?= $t['certifie'] ? 'Oui' : 'Non' ?></td>
                     </tr>
                 <?php endforeach; ?>
+
             <?php else: ?>
                 <tr>
-                    <td colspan="5" style="text-align:center;">Aucun utilisateur trouvé</td>
+                    <td colspan="3">Aucun timbre trouvé</td>
                 </tr>
             <?php endif; ?>
         </table>
 
-        <a href="home.php?action=home">Retour à l'accueil</a>
+        <div class="actions">
 
-    </body>
-
-</html>
+            <a href="/Projet_web1/stampee/app/views/auth/home.php"> Retour à l'accueil</a>
+        </div>
