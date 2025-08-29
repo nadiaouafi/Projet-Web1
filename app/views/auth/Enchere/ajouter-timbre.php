@@ -9,32 +9,48 @@ $pdo = Database::getInstance();
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nom = $_POST['nom'];
-    $description = $_POST['description'];
+    $nom = $_POST['nom'] ?? '';
+    $description = $_POST['description'] ?? '';
 
-    // Dossier de destination
-    $targetDir = __DIR__ . "/../../../public/img/";
-    $fileName = basename($_FILES["image"]["name"]);
-    $targetFile = $targetDir . $fileName;
+    // --- Image principale ---
+    if (!empty($_FILES['image_principale']['name'])) {
+        $targetDir = __DIR__ . "/../../../public/img/";
+        $fileName = basename($_FILES["image_principale"]["name"]);
+        $targetFile = $targetDir . $fileName;
 
-    // Vérifie si le dossier existe
-    if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0777, true);
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0777, true);
+        }
+
+        if (move_uploaded_file($_FILES["image_principale"]["tmp_name"], $targetFile)) {
+            // chemin relatif pour stocker en BD
+            $imagePath = "img/" . $fileName;
+        } else {
+            $message = "Erreur lors de l’upload de l’image principale.";
+        }
     }
 
-    // Upload du fichier
-    if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
-        // chemin relatif pour afficher dans <img>
-        $imagePath = "image/" . $fileName;
+    // --- Images supplémentaires ---
+    $imagesSupp = [];
+    if (!empty($_FILES['images_supplementaires']['name'][0])) {
+        $targetDirSupp = __DIR__ . "/../../../public/details/";
+        if (!is_dir($targetDirSupp)) {
+            mkdir($targetDirSupp, 0777, true);
+        }
 
-        $stmt = $pdo->prepare("INSERT INTO timbre (nom, description, image) VALUES (?, ?, ?)");
-        $stmt->execute([$nom, $description, $imagePath]);
+        foreach ($_FILES['images_supplementaires']['name'] as $key => $file) {
+            $fileName = basename($file);
+            $targetFile = $targetDirSupp . $fileName;
 
-        $message = " Timbre ajouté avec succès !";
-    } else {
-        $message = " Erreur lors de l’upload du fichier.";
+            if (move_uploaded_file($_FILES['images_supplementaires']['tmp_name'][$key], $targetFile)) {
+                $imagesSupp[] = "details/" . $fileName;
+            }
+        }
     }
+
+    $message = "Timbre ajouté avec succès !";
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">

@@ -1,8 +1,23 @@
 <?php
 require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../models/timbre.php';
 
-class TimbreController
+
+class timbreController
 {
+    private $timbreModel;
+
+    public function __construct($pdo)
+    {
+        $this->timbreModel = new Timbre($pdo);
+    }
+
+    public function index()
+    {
+        $timbres = $this->timbreModel->getAll();
+        require __DIR__ . '/../views/auth/Enchere/timbres.php';
+    }
+
 
     public function ajouter()
     {
@@ -66,15 +81,29 @@ class TimbreController
                     $certifie
                 ]);
 
-                $_SESSION['success'] = "✅ Timbre ajouté avec succès !";
+                $_SESSION['success'] = " Timbre ajouté avec succès !";
                 header("Location: /Projet_web1/stampee/app/views/auth/Enchere/timbre.php");
                 exit;
             } catch (PDOException $e) {
-                echo "❌ Erreur : " . $e->getMessage();
+                echo " Erreur : " . $e->getMessage();
             }
         }
 
         // Charger la vue
-        require __DIR__ . "/app/views/auth/Enchere/ajouter-timbre.php";
+        require __DIR__ . "/../../views/auth/Enchere/ajouter-timbre.php";
+    }
+
+    public function rechercher()
+    {
+        $keyword = $_GET['q'] ?? '';
+
+        if (!empty($keyword)) {
+            $resultats = $this->timbreModel->search($keyword);
+        } else {
+            $resultats = $this->timbreModel->getAll();
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($resultats);
     }
 }

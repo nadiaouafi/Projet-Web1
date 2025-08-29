@@ -2,6 +2,18 @@
 $baseUrl = '/Projet_web1/stampee/app/public/';
 ?>
 
+<?php
+require_once __DIR__ . '/../../../../config/Database.php';
+require_once __DIR__ . "/../../../models/timbre.php";
+
+
+$pdo = Database::getInstance();
+
+// Utiliser ton modèle
+$timbreModel = new Timbre($pdo);
+$timbres = $timbreModel->getAll();
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -16,56 +28,20 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
 <body>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 20px;
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-
         table {
             border-collapse: collapse;
-            width: 90%;
-            margin: 0 auto;
-            background-color: #fff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
         }
 
         th,
         td {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
+            border: 1px solid #ccc;
+            padding: 8px;
             text-align: left;
         }
 
         th {
-            background-color: #007BFF;
-            color: white;
-            text-transform: uppercase;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        a {
-            display: inline-block;
-            margin: 20px auto;
-            text-decoration: none;
-            color: #007BFF;
-            font-weight: bold;
-        }
-
-        a:hover {
-            text-decoration: underline;
+            background-color: #f4f4f4;
         }
     </style>
     </head>
@@ -97,6 +73,11 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
 
         </header>
 
+        <div class="actions">
+            <a href="/Projet_web1/stampee/app/views/auth/Enchere/ajouter-timbre.php"> Ajouter un Timbre</a>
+
+        </div>
+
         <h2>Liste des timbres</h2>
         <table border="1" cellpadding="5">
             <tr>
@@ -108,18 +89,14 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
                 <th>État</th>
                 <th>Tirage</th>
                 <th>Dimensions</th>
+                <th>Prix</th>
                 <th>Certifié</th>
             </tr>
-
-            <div class="actions">
-                <a href="/Projet_web1/stampee/app/views/auth/Enchere/ajouter-timbre.php"> Ajouter un Timbre</a>
-
-            </div>
 
             <?php if (!empty($timbres) && is_array($timbres)): ?>
                 <?php foreach ($timbres as $t): ?>
                     <tr>
-                        <td><?= htmlspecialchars($t['id']) ?></td>
+                        <td><?= htmlspecialchars($t['idTimbre']) ?></td>
                         <td><?= htmlspecialchars($t['nom']) ?></td>
                         <td><?= htmlspecialchars($t['date_creation']) ?></td>
                         <td><?= htmlspecialchars($t['couleurs']) ?></td>

@@ -1,0 +1,30 @@
+<?php
+require_once __DIR__ . '/../models/timbre.php';
+
+class ApiTimbreController
+{
+    private $pdo;
+
+    public function __construct($pdo)
+    {
+        $this->pdo = $pdo;
+    }
+
+    // Renvoyer la liste des timbres en JSON
+    public function getTimbres()
+    {
+        $timbreModel = new Timbre($this->pdo);
+        $timbres = $timbreModel->getAll(); // méthode qu’on code dans Timbre.php
+        header('Content-Type: application/json');
+        echo json_encode($timbres);
+    }
+
+    // Renvoyer un timbre par ID
+    public function getTimbre($id)
+    {
+        $timbreModel = new Timbre($this->pdo);
+        $timbre = $timbreModel->getById($id);
+        header('Content-Type: application/json');
+        echo json_encode($timbre);
+    }
+}

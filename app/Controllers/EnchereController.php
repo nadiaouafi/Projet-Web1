@@ -1,40 +1,35 @@
 <?php
-require_once __DIR__ . '/../models/timbre.php';
 
 class EnchereController
 {
-    private $enchere;
-    private $pdo;
+    private PDO $pdo;
+    private $timbreModel;
 
 
 
-    public function __construct($pdo)
+    public function __construct()
     {
 
 
-        $this->pdo = $pdo;
-        if (session_status() === PHP_SESSION_NONE) session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
-
 
     public function index()
     {
-        session_start();
         if (!isset($_SESSION['membre_id'])) {
             header('Location: /connexion');
             exit;
         }
 
-        $pdo = Database::getInstance();
-        $stmt = $pdo->query("SELECT * FROM Enchere WHERE archivee = 0");
-        $enchere = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $membre_id = $_SESSION['membre_id'];
-        $stmt2 = $pdo->prepare("SELECT * FROM Membre WHERE id = :id");
-        $stmt2->execute(['id' => $membre_id]);
+        $stmt2 = $this->pdo->prepare("SELECT * FROM Membre WHERE id = :id");
+        $stmt2->execute(['id' => $_SESSION['membre_id']]);
         $profil = $stmt2->fetch(PDO::FETCH_ASSOC);
 
-        require '../app/views/auth/home.php';
+        $coupsDeCoeur = $this->timbreModel->getCoupsDeCoeur(4);
+
+        require __DIR__ . '/../views/auth/home.php';
     }
 
     public function ajouter()
@@ -44,8 +39,6 @@ class EnchereController
             $date_creation = $_POST['date_creation'] ?? null;
             $couleurs = $_POST['couleurs'] ?? '';
             $pays_origine = $_POST['pays_origine'] ?? '';
-            $image_principale = $_POST['image_principale'];
-            $images_supplementaires = $_POST['images_supplementaires'];
             $etat = $_POST['etat'] ?? '';
             $tirage = $_POST['tirage'] ?? null;
             $dimensions = $_POST['dimensions'] ?? '';
@@ -66,42 +59,71 @@ class EnchereController
                 }
             }
 
-            // Ajouter le timbre dans la base
-            $this->enchere->ajouter(
+            // Sauvegarde via le modèle
+            $this->timbreModel->ajouter(
                 $nom,
                 $date_creation,
                 $couleurs,
                 $pays_origine,
                 $image_principale,
-                $images_supplementaires,
+                json_encode($images_supplementaires),
                 $etat,
                 $tirage,
                 $dimensions,
                 $certifie
             );
 
-            header("Location: /Projet_web1/stampee/index.php?action=listeEncheres");
+            header("Location: /Projet_web1/stampee/index.php?action=listeTimbres");
             exit();
         }
 
         require __DIR__ . '/../views/auth/Enchere/ajouter-timbre.php';
     }
 
-    public function listeTimbres()
+    public function listeTimbres($id)
+
     {
-        $stmt = $this->pdo->query("SELECT * FROM Timbre");
-        $timbres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $timbres = $this->timbreModel->getAll();
 
         require __DIR__ . '/../views/auth/Enchere/timbre.php';
     }
 
-    public function details($id)
+    public function detail($id)
     {
-        $timbre = $this->enchere->getById($id);
+        $timbre = $this->timbreModel->getById($id);
+
         if (!$timbre) {
-            echo "Timbre introuvable.";
-            exit;
+            echo "Timbre introuvable avec l’ID $id.";
+            return;
         }
-        require __DIR__ . '/../views/encheres/details.php';
+
+        require __DIR__ . "/../views/auth/Enchere/detailEnchere.php";
+    }
+
+
+    public function coupsDeCoeur()
+    {
+        $timbre = $this->timbreModel->getCoupsDeCoeur(4);
+        require __DIR__ . '/../views/auth/home.php';
+    }
+
+
+    public function catalogue()
+    {
+        $filters = [];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $filters['pays']       = $_POST['pays'] ?? '';
+            $filters['annee']      = $_POST['annee'] ?? '';
+            $filters['prix_min']   = $_POST['prix_min'] ?? '';
+            $filters['prix_max']   = $_POST['prix_max'] ?? '';
+            $filters['couleur']    = $_POST['couleur'] ?? '';
+            $filters['etat']       = $_POST['etat'] ?? '';
+            $filters['certifie']   = $_POST['certification'] ?? '';
+        }
+
+        $timbres = $this->timbreModel->searchWithFilters($filters);
+
+        require __DIR__ . '/../views/auth/Enchere/enchere.php';
     }
 }

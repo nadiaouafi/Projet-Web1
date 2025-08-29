@@ -2,10 +2,6 @@
 
 require_once __DIR__ . '/../models/Utilisateur.php';
 
-
-
-
-
 class UtilisateurController
 {
     private $utilisateur;
@@ -36,7 +32,7 @@ class UtilisateurController
                 header("Location: index.php?action=utilisateurs"); // après inscription → liste
                 exit();
             } else {
-                echo "❌ Erreur lors de l'inscription.";
+                echo "Erreur lors de l'inscription.";
             }
         } else {
             include 'app/views/auth/inscription.php';

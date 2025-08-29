@@ -1,10 +1,10 @@
-<h1>Détails du timbre : <?= htmlspecialchars($timbre['nom']) ?></h1>
+<h1>Détails du timbre : </h1>
 
 <div style="display:flex; gap:20px;">
     <!-- Image principale avec effet loupe -->
     <div style="flex:1; position:relative; overflow:hidden;">
         <img id="mainImage"
-            src="/Projet_web1/stampee/public/img/<?= htmlspecialchars($timbre['image_principale']) ?>"
+            src="/Projet_web1/stampee/public/<?= htmlspecialchars($timbre['image_principale']) ?>"
             alt="<?= htmlspecialchars($timbre['nom']) ?>"
             style="width:100%; transition: transform 0.3s; cursor: zoom-in;">
     </div>
@@ -28,7 +28,7 @@
     <div style="display:flex; flex-wrap:wrap; gap:10px;">
         <?php foreach ($timbre['images_supplementaires'] as $img): ?>
             <img class="thumb"
-                src="/Projet_web1/stampee/public/details/<?= htmlspecialchars($img) ?>"
+                src="/Projet_web1/stampee/public/<?= htmlspecialchars($img) ?>"
                 alt="Supplémentaire"
                 style="width:100px; height:auto; cursor:pointer;"
                 onclick="openLightbox(this.src)">

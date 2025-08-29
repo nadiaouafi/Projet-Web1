@@ -2,6 +2,7 @@
 $baseUrl = '/Projet_web1/stampee/app/public/';
 ?>
 
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -12,6 +13,39 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
     <link rel="stylesheet" href="<?= $baseUrl ?>css/style.css">
     <script src="/js/auth.js"></script>
 </head>
+
+<script>
+    document.querySelector('.hero-searchbar').addEventListener('submit', function(e) {
+        e.preventDefault(); // Empêcher le rechargement
+
+        let keyword = this.querySelector('input[name="filtres[recherche]"]').value;
+
+        fetch(`index.php?action=rechercher&q=${encodeURIComponent(keyword)}`)
+            .then(res => res.json())
+            .then(data => {
+                let html = '';
+                if (data.length === 0) {
+                    html = "<p>Aucun timbre trouvé.</p>";
+                } else {
+                    data.forEach(timbre => {
+                        html += `
+                    <article class="carte">
+                      <img src="app/public/img/${timbre.image_principale}" alt="${timbre.nom}">
+                      <h3>${timbre.nom}</h3>
+                      <p>${timbre.pays_origine} - ${timbre.etat}</p>
+                      <a href="index.php?action=detail&id=${timbre.idTimbre}">Voir détail</a>
+                    </article>
+                  `;
+                    });
+                }
+                document.querySelector('#resultats').innerHTML = html;
+            })
+            .catch(err => {
+                console.error("Erreur AJAX :", err);
+            });
+    });
+</script>
+
 
 <body>
     <header>
@@ -37,6 +71,7 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
             </select>
         </div>
 
+
     </header>
 
     <section class="section-hero">
@@ -54,129 +89,52 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
                         name="filtres[recherche]"
                         placeholder="Recherchez un timbre..."
                         type="search">
-                    <button type="submit" aria-label="Lancer la recherche">
-                        <svg role="img" class="svg-icon search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7">
-                            <title>Icône de loupe</title>
-                            <desc>Icône représentant une loupe pour effectuer une recherche</desc>
-                            <g class="search-path" fill="none" stroke="#000" stroke-width="2px">
-                                <path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4" />
-                                <circle cx="8" cy="8" r="7" />
-                            </g>
-                        </svg>
-                    </button>
+                    <button type="submit" aria-label="Lancer la recherche"> 🔍 </button>
                 </form>
+
+                <!-- Conteneur pour injecter les résultats -->
+                <section id="resultats"></section>
             </div>
         </div>
     </section>
-    <main class="contenu-principal">
 
+    <main class="contenu-principal">
         <section class="catalogue" aria-live="polite">
             <h1 class="sr-only">Catalogue des enchères</h1>
 
-            <!-- Canada 1851 -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Canada 1851 – One Penny Red</h2>
-                    <p><strong>Timbre classique – Reine Victoria</strong></p>
+            <?php
+            require_once __DIR__ . '/../../../config/Database.php';
+            $pdo = Database::getInstance();
+            $pdo = $db->getConnection();
+            $stmt = $pdo->query("SELECT idTimbre, nom, description, image_principale, prix FROM timbre");
+            $timbres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            ?>
 
-                    <img src="/Projet_web1/stampee/app/public/img/redpenny.jpg" alt="reine victoria">
-                    <div class="infos">
+            <?php if (!empty($timbres)): ?>
+                <?php foreach ($timbres as $t): ?>
+                    <article class="carte">
+                        <div class="fiche-timbre">
+                            <h2><?= htmlspecialchars($t['nom']) ?></h2>
+                            <p><strong><?= htmlspecialchars($t['description'] ?? 'Pas de description') ?></strong></p>
 
-                        <p class="prix">Enchère actuelle : 35 $</p>
+                            <img src="/Projet_web1/stampee/app/public/img/<?= htmlspecialchars($t['image_principale']) ?>"
+                                alt="<?= htmlspecialchars($t['nom']) ?>">
 
-                    </div>
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn ">Encherir</a>
-                        <a href="components/detailspenny.html" class="btn">Détails</a>
+                            <div class="infos">
+                                <p class="prix">Enchère actuelle : <?= htmlspecialchars($t['prix' ?? '0']) ?> $</p>
+                            </div>
 
-                    </div>
-                </div>
-            </article>
-
-            <!-- Mauritius Post Office -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Mauritius Post Office 1847</h2>
-                    <p><strong>Timbre mythique – Mention « Post Office » originale</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/Maurice.jpeg" alt="">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 85$</p>
-
-                    </div>
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="components/DetailsMauritus.html" class="btn ">Détails</a>
-
-                    </div>
-
-                </div>
-            </article>
-
-            <!-- Penny Black -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Penny Black 1840</h2>
-                    <p><strong>Premier timbre postal au monde – Un symbole de l’histoire philatélique</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/Penny_black.jpg" alt="Penny Black">
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 75$</p>
-
-                    </div>
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-
-                        <a href="components/detailsPennyblack.html" class="btn ">Détails</a>
-
-                    </div>
-
-                </div>
-            </article>
-
-            <!-- Jenny Inversé -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Inverted Jenny 1918</h2>
-                    <p><strong>L’un des plus célèbres timbres à erreur d’impression des États-Unis.</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/InvertedJenny.jpeg" alt="">
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 35$</p>
-
-                    </div>
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="components/detailsInvertedJenny.html" class="btn">Détails</a>
-
-                    </div>
-
-                </div>
-            </article>
-
-            <!-- Dragon Large 1878 -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Dragon Large 1878</h2>
-                    <p><strong>Premier timbre impérial chinois émis sous les Qing</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/chine.jpg" alt="">
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 92$</p>
-
-                    </div>
-                    <div class="boutons">
-
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="components/detailsChine.html" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
+                            <div class="boutons">
+                                <a href="components/encherir.php?id=<?= $t['idTimbre'] ?>" class="btn">Enchérir</a>
+                                <a href="app/views/Enchere/detailEnchere.php?id=<?= $t['idTimbre'] ?>" class="btn">Détails</a>
+                            </div>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Aucune enchère disponible pour le moment.</p>
+            <?php endif; ?>
+        </section>
 
 
 
@@ -201,82 +159,45 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
     <section class="coup-de-coeur">
         <h2>Le coup de cœur de Lord Stampee</h2>
         <div class="container">
-
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>CHYPRE 1880-1910 SELECTION</h2>
-
-
-                    <img src="/Projet_web1/stampee/app/public/img/coupdecoeur1.webp" alt="CHYPRE 1880-1910 SELECTION">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 50 $</p>
-                    </div>
-
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="#" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>CANADA 1852 #4</h2>
+            <?php
+            require_once __DIR__ . '/../../../config/Database.php';
+            $db = new Database();
+            $pdo = $db->getConnection();
 
 
-                    <img src="/Projet_web1/stampee/app/public/img/coupdecoeur2.webp" alt="CANADA 1852 #4">
+            // Coup de cœur
+            $stmtCdc = $pdo->query("SELECT idTimbre, nom, image_principale, prix FROM timbre WHERE coup_de_coeur = 1");
+            $coupsDeCoeur = $stmtCdc->fetchAll(PDO::FETCH_ASSOC);
+            ?>
 
-                    <div class="infos">
+            <?php if (!empty($coupsDeCoeur)): ?>
+                <?php foreach ($coupsDeCoeur as $cdc): ?>
+                    <article class="carte">
+                        <div class="fiche-timbre">
+                            <h2><?= htmlspecialchars($cdc['nom']) ?></h2>
+                            <img src="/Projet_web1/stampee/app/public/img/<?= htmlspecialchars($cdc['image_principale']) ?>"
+                                alt="<?= htmlspecialchars($cdc['nom']) ?>">
 
-                        <p class="prix">Enchère actuelle : 20 $</p>
-                    </div>
+                            <div class="infos">
+                                <p class="prix">Enchère actuelle : <?= htmlspecialchars($cdc['prix']) ?> $</p>
+                            </div>
 
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="#" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>CHYPRE 1880-1910 SELECTION</h2>
-
-                    <img src="/Projet_web1/stampee/app/public/img/coupdecoeur3.jpg" alt="Pays-Bas 1927 NVPH R32">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 250 $</p>
-                    </div>
-
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="#" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>CANADA #200 -Roi George 1932</h2>
-
-
-                    <img src="/Projet_web1/stampee/app/public/img/coupdecoeur4.jpg" alt="CANADA #200 -Roi George 1932">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 25 $</p>
-                    </div>
-
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="#" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
+                            <div class="boutons">
+                                <a href="components/encherir.php?id=<?= $cdc['idTimbre'] ?>" class="btn">Enchérir</a>
+                                <a href="components/detail.php?id=<?= $cdc['idTimbre'] ?>" class="btn">Détails</a>
+                            </div>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Aucun coup de cœur pour le moment.</p>
+            <?php endif; ?>
+        </div>
     </section>
+
+
+
+
 
 
 

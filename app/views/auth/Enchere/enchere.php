@@ -68,10 +68,6 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
         </div>
     </section>
 
-
-
-
-
     <main class="contenu-principal">
 
 
@@ -173,255 +169,39 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
         <section class="catalogue" aria-live="polite">
             <h1 class="sr-only">Catalogue des enchères</h1>
 
-            <!-- Canada 1851 -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Canada 1851 – One Penny Red</h2>
-                    <p><strong>Timbre classique – Reine Victoria</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/redpenny.jpg" alt="reine victoria">
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 35 $</p>
-
-                    </div>
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn ">Encherir</a>
-                        <a href="components/detailspenny.html" class="btn">Détails</a>
-
-                    </div>
-                </div>
-            </article>
-
-            <!-- Mauritius Post Office -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Mauritius Post Office 1847</h2>
-                    <p><strong>Timbre mythique – Mention « Post Office » originale</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/Maurice.jpeg" alt="">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 85$</p>
-
-                    </div>
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="components/DetailsMauritus.html" class="btn ">Détails</a>
-
-                    </div>
-
-                </div>
-            </article>
-
-            <!-- Penny Black -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Penny Black 1840</h2>
-                    <p><strong>Premier timbre postal au monde – Un symbole de l’histoire philatélique</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/Penny_black.jpg" alt="Penny Black">
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 75$</p>
-
-                    </div>
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-
-                        <a href="components/detailsPennyblack.html" class="btn ">Détails</a>
-
-                    </div>
-
-                </div>
-            </article>
-
-            <!-- Jenny Inversé -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Inverted Jenny 1918</h2>
-                    <p><strong>L’un des plus célèbres timbres à erreur d’impression des États-Unis.</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/InvertedJenny.jpeg" alt="">
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 35$</p>
-
-                    </div>
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="components/detailsInvertedJenny.html" class="btn">Détails</a>
-
-                    </div>
-
-                </div>
-            </article>
-
-            <!-- Dragon Large 1878 -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Dragon Large 1878</h2>
-                    <p><strong>Premier timbre impérial chinois émis sous les Qing</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/chine.jpg" alt="">
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 92$</p>
-
-                    </div>
-                    <div class="boutons">
-
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="components/detailsChine.html" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
-
-
-            <!-- Cérès 1870 -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Cérès 1870 – 25 centimes bleu</h2>
-                    <p><strong>Réimpression de la série classique après la guerre franco-prussienne</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/ceres1.jpg" alt="">
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 62$</p>
-
-                    </div>
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="components/details.Ceres.html" class="btn">Détails</a>
-
-                    </div>
-
-                </div>
-            </article>
-
-            <!-- Leopald II --->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Belgique 1878 – 5F Brun Rouge, Léopold II</h2>
-                    <p><strong>Avec certificat du Kaiser – OBP/COB 37</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/leopoldII.jpg" alt="Timbre Léopold II 1878">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 500 $</p>
-                    </div>
-
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="components/DétailsLéopoldII.html" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Umberto I -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Italie 1879 – 25c Umberto I</h2>
-                    <p><strong>MN**H – Centrage parfait – Certificat Caffaz</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/Italie.jpg" alt="Timbre Italie Umberto I 25c 1879">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 800 $</p>
-                    </div>
-
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="components/detailsItalie.html" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Reine Elisabeth II -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Reine Elisabeth II 3d de 1955</h2>
-                    <p><strong>Royaume-Uni 00291a reine Elisabeth II 3d de 1955</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/reine-elisabeth II.webp" alt="">
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 70$</p>
-
-                    </div>
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="components/details.Ceres.html" class="btn">Détails</a>
-
-                    </div>
-
-                </div>
-            </article>
-
-
-            <!-- Pays-Bas -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Pays-Bas 1927 – NVPH R32</h2>
-                    <p><strong>Roue à trois fentes à quatre côtés</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/paysbas.jpg" alt="Pays-Bas 1927 NVPH R32">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 250 $</p>
-                    </div>
-
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="components/Detailspaysbas.html" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
-
-
-            <!-- Hôtel de ville -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Timbre Hôtel de ville</h2>
-                    <p><strong>Timbre Hôtel de ville de Termonde renversé</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/hotel_de_ville.jpg" alt="">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 250 $</p>
-                    </div>
-
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="components/Detailspaysbas.html" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Pays-Bas -->
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>Belgique 1861 </h2>
-                    <p><strong>Belgique 1861 - Leopold I - Médaillon 10</strong></p>
-
-                    <img src="/Projet_web1/stampee/app/public/img/Belgique_1849.jpg" alt="">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 250 $</p>
-                    </div>
-
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="components/Detailspaysbas.html" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
+            <?php
+            require_once __DIR__ . '/../../../config/Database.php';
+            $db = new Database();
+            $pdo = $db->getConnection();
+            $stmt = $pdo->query("SELECT idTimbre, nom, description, image_principale, prix FROM timbre");
+            $timbres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            ?>
+
+            <?php if (!empty($timbres)): ?>
+                <?php foreach ($timbres as $t): ?>
+                    <article class="carte">
+                        <div class="fiche-timbre">
+                            <h2><?= htmlspecialchars($t['nom']) ?></h2>
+                            <p><strong><?= htmlspecialchars($t['description'] ?? 'Pas de description') ?></strong></p>
+
+                            <img src="/Projet_web1/stampee/app/public/img/<?= htmlspecialchars($t['image_principale']) ?>"
+                                alt="<?= htmlspecialchars($t['nom']) ?>">
+
+                            <div class="infos">
+                                <p class="prix">Enchère actuelle : <?= htmlspecialchars($t['prix' ?? '0']) ?> $</p>
+                            </div>
+
+                            <div class="boutons">
+                                <a href="components/encherir.php?id=<?= $t['idTimbre'] ?>" class="btn">Enchérir</a>
+                                <a href="app/views/Enchere/detailEnchere.php?id=<?= $t['idTimbre'] ?>" class="btn">Détails</a>
+                            </div>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Aucune enchère disponible pour le moment.</p>
+            <?php endif; ?>
+        </section>
 
 
     </main>
@@ -434,82 +214,40 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
 
         <div class="container">
 
-
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>CHYPRE 1880-1910 SELECTION</h2>
-                    <img src="/Projet_web1/stampee/app/public/img/coupdecoeur1.webp" alt="CHYPRE 1880-1910 SELECTION">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 50 $</p>
-                    </div>
-
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="#" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
+            <?php
+            require_once __DIR__ . '/../../../config/Database.php';
+            $db = new Database();
+            $pdo = $db->getConnection();
 
 
+            // Coup de cœur
+            $stmtCdc = $pdo->query("SELECT idTimbre, nom, image_principale, prix FROM timbre WHERE coup_de_coeur = 1");
+            $coupsDeCoeur = $stmtCdc->fetchAll(PDO::FETCH_ASSOC);
+            ?>
 
+            <?php if (!empty($coupsDeCoeur)): ?>
+                <?php foreach ($coupsDeCoeur as $cdc): ?>
+                    <article class="carte">
+                        <div class="fiche-timbre">
+                            <h2><?= htmlspecialchars($cdc['nom']) ?></h2>
+                            <img src="/Projet_web1/stampee/app/public/img/<?= htmlspecialchars($cdc['image_principale']) ?>"
+                                alt="<?= htmlspecialchars($cdc['nom']) ?>">
 
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>CANADA 1852 #4</h2>
+                            <div class="infos">
+                                <p class="prix">Enchère actuelle : <?= htmlspecialchars($cdc['prix']) ?> $</p>
+                            </div>
 
-
-                    <img src="/Projet_web1/stampee/app/public/img/coupdecoeur2.webp" alt="CANADA 1852 #4">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 20 $</p>
-                    </div>
-
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="#" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>CHYPRE 1880-1910 SELECTION</h2>
-
-                    <img src="/Projet_web1/stampee/app/public/img/coupdecoeur3.jpg" alt="Pays-Bas 1927 NVPH R32">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 250 $</p>
-                    </div>
-
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="#" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="carte">
-                <div class="fiche-timbre">
-                    <h2>CANADA #200 -Roi George 1932</h2>
-
-
-                    <img src="/Projet_web1/stampee/app/public/img/coupdecoeur4.jpg" alt="CANADA #200 -Roi George 1932">
-
-                    <div class="infos">
-
-                        <p class="prix">Enchère actuelle : 25 $</p>
-                    </div>
-
-                    <div class="boutons">
-                        <a href="components/encherir.html" class="btn">Enchérir</a>
-                        <a href="#" class="btn">Détails</a>
-                    </div>
-                </div>
-            </article>
+                            <div class="boutons">
+                                <a href="components/encherir.php?id=<?= $cdc['idTimbre'] ?>" class="btn">Enchérir</a>
+                                <a href="components/detail.php?id=<?= $cdc['idTimbre'] ?>" class="btn">Détails</a>
+                            </div>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Aucun coup de cœur pour le moment.</p>
+            <?php endif; ?>
+        </div>
     </section>
 
 
