@@ -1,6 +1,15 @@
 <?php
 $baseUrl = '/Projet_web1/stampee/app/public/';
 ?>
+<?php
+require_once __DIR__ . '/../../../../config/Database.php'; // chemin relatif vers ta classe Database
+use Stampee\Config\Database;
+
+$pdo = Database::getInstance(); // récupère l'objet PDO
+
+$stmt = $pdo->query("SELECT * FROM utilisateurs");
+$utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -107,7 +116,6 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
                 <th>Email</th>
                 <th>Date d'inscription</th>
             </tr>
-
             <?php if (!empty($utilisateurs)): ?>
                 <?php foreach ($utilisateurs as $u): ?>
                     <tr>
@@ -115,7 +123,7 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
                         <td><?= htmlspecialchars($u['prenom']) ?></td>
                         <td><?= htmlspecialchars($u['nom']) ?></td>
                         <td><?= htmlspecialchars($u['email']) ?></td>
-                        <td>(Inscrit le <?= $u['date_inscription'] ?>)<?= htmlspecialchars($u['date_inscription']) ?></td>
+                        <td><?= htmlspecialchars($u['date_inscription']) ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -123,9 +131,8 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
                     <td colspan="5" style="text-align:center;">Aucun utilisateur trouvé</td>
                 </tr>
             <?php endif; ?>
-        </table>
 
-        <a href="home.php?action=home">Retour à l'accueil</a>
+            <a href="home.php?action=home">Retour à l'accueil</a>
 
     </body>
 

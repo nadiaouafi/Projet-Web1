@@ -6,6 +6,7 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
 require_once __DIR__ . '/../../../../config/Database.php';
 require_once __DIR__ . "/../../../models/timbre.php";
 
+use Stampee\Config\Database;
 
 $pdo = Database::getInstance();
 
@@ -104,7 +105,7 @@ $timbres = $timbreModel->getAll();
                         <td><?= htmlspecialchars($t['etat']) ?></td>
                         <td><?= htmlspecialchars($t['tirage']) ?></td>
                         <td><?= htmlspecialchars($t['dimensions']) ?></td>
-                        <td><?= htmlspecialchars($t['prix']) ?></td>
+                        <td><?= htmlspecialchars($t['Prix']) ?></td>
                         <td><?= $t['certifie'] ? 'Oui' : 'Non' ?></td>
                     </tr>
                 <?php endforeach; ?>

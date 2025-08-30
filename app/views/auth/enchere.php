@@ -1,6 +1,20 @@
 <?php
 $baseUrl = '/Projet_web1/stampee/app/public/';
 ?>
+<?php
+require_once __DIR__ . '/../../../config/Database.php';
+
+use Stampee\Config\Database;
+
+$pdo = Database::getInstance();
+
+$query = $pdo->query("SELECT * FROM timbre");
+$timbres = $query->fetchAll(PDO::FETCH_ASSOC);
+
+$query = $pdo->query("SELECT * FROM timbre ORDER BY RAND() LIMIT 4");
+$coupsDeCoeur = $query->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,8 +40,11 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
                 <li><a href="<?= $baseUrl ?>app/views/auth/index.php">Accueil</a></li>
                 <li><a href="<?= $baseUrl ?>app/views/auth/enchere.php">Enchères</a></li>
                 <li><a href="<?= $baseUrl ?>app/views/auth/connexion.php">Connexion</a></li>
+                <li><a href="index.php?page=ajouter-timbre">Ajouter un timbre</a></li>
             </ul>
-        </nav>>
+
+        </nav>
+
 
         <div class="language-selector">
             <select aria-label="langue" name="langue">
@@ -175,7 +192,7 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
             <?php
             require_once __DIR__ . '/../../../config/Database.php';
 
-            $pdo = Database::getInstance();
+
 
             $stmt = $pdo->query("SELECT idTimbre, nom, description, image_principale, prix FROM timbre");
             $timbres = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -221,8 +238,7 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
 
             <?php
             require_once __DIR__ . '/../../../config/Database.php';
-            $db = new Database();
-            $pdo = $db->getConnection();
+
 
 
             // Coup de cœur

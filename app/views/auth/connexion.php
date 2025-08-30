@@ -6,6 +6,8 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
 session_start();
 require_once __DIR__ . '/../../../config/Database.php';
 
+use Stampee\Config\Database;
+
 $erreurs = [];
 
 $pdo = Database::getInstance();

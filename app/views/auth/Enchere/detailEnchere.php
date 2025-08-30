@@ -36,6 +36,17 @@
     </div>
 <?php endif; ?>
 
+
+<?php if ($meilleureOffre): ?>
+    <p>
+        Meilleure offre : <?= $meilleureOffre['montant'] ?> $ par
+        <?= $meilleureOffre['prenom'] . ' ' . $meilleureOffre['nom'] ?>
+        (<?= $meilleureOffre['date_offre'] ?>)
+    </p>
+<?php else: ?>
+    <p>Aucune offre pour le moment.</p>
+<?php endif; ?>
+
 <a href="index.php?action=listeEncheres">Retour à la liste</a>
 
 <!-- Lightbox -->

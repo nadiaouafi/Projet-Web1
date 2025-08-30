@@ -29,27 +29,28 @@ CREATE TABLE Timbre (
 
 
 CREATE TABLE Enchere (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    timbre_id INT NOT NULL,
+    idEnchere INT AUTO_INCREMENT PRIMARY KEY,
+    idTimbre INT NOT NULL,
     date_debut DATETIME NOT NULL,
     date_fin DATETIME NOT NULL,
     prix DECIMAL(10,2) NOT NULL,
     coups_de_coeur BOOLEAN DEFAULT FALSE,
     archivee BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (timbre_id) REFERENCES Timbre(id) ON DELETE CASCADE,
+    FOREIGN KEY (timbre_id) REFERENCES Timbre(idTimbre) ON DELETE CASCADE,
     INDEX(date_debut),
     INDEX(date_fin)
 );
 
 
 CREATE TABLE Offre (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    idOffre INT AUTO_INCREMENT PRIMARY KEY,
     enchere_id INT NOT NULL,
     membre_id INT NOT NULL,
     montant DECIMAL(10,2) NOT NULL,
     date_offre DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (enchere_id) REFERENCES Enchere(id) ON DELETE CASCADE,
-    FOREIGN KEY (membre_id) REFERENCES Membre(id) ON DELETE CASCADE,
+    FOREIGN KEY (membre_id) REFERENCES utilisateurs(idUtilisateurs)
+
     INDEX(enchere_id),
     INDEX(membre_id)
 );

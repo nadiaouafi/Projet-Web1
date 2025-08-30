@@ -5,7 +5,7 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
 <?php
 require_once __DIR__ . '/../../../../config/Database.php';
 
-$pdo = Database::getInstance();
+
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

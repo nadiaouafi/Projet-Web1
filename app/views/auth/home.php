@@ -1,7 +1,20 @@
 <?php
 $baseUrl = '/Projet_web1/stampee/app/public/';
 ?>
+<?php
+require_once __DIR__ . '/../../../config/Database.php';
 
+use Stampee\Config\Database;
+
+$pdo = Database::getInstance();
+
+$query = $pdo->query("SELECT * FROM timbre");
+$timbres = $query->fetchAll(PDO::FETCH_ASSOC);
+
+$query = $pdo->query("SELECT * FROM timbre ORDER BY RAND() LIMIT 4");
+$coupsDeCoeur = $query->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -105,7 +118,7 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
             <?php
             require_once __DIR__ . '/../../../config/Database.php';
             $pdo = Database::getInstance();
-            $pdo = $db->getConnection();
+
             $stmt = $pdo->query("SELECT idTimbre, nom, description, image_principale, prix FROM timbre");
             $timbres = $stmt->fetchAll(PDO::FETCH_ASSOC);
             ?>
@@ -161,8 +174,7 @@ $baseUrl = '/Projet_web1/stampee/app/public/';
         <div class="container">
             <?php
             require_once __DIR__ . '/../../../config/Database.php';
-            $db = new Database();
-            $pdo = $db->getConnection();
+            $pdo = Database::getInstance();
 
 
             // Coup de cœur
